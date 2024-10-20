@@ -3,9 +3,11 @@
 <script setup>
 import axios from "axios";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const username = ref("");
 const password = ref("");
+const router = useRouter(); // Vue router instance to redirect to /categories
 
 const handleLogin = async () => {
   const data = {
@@ -13,9 +15,18 @@ const handleLogin = async () => {
     password: password.value,
   };
 
-  const res = await axios.post("http://localhost:3000/auth/login", data);
-  alert("Login successful!");
-  console.log("Login successful:", res.data);
+  try {
+    const res = await axios.post("http://localhost:3000/auth/login", data);
+    console.log("Login successful:", res.data.token);
+    localStorage.setItem("token", res.data.token); // Save token to local storage for future requests
+    localStorage.setItem("username", username.value); // Save username to local storage for future requests
+
+    // Redirect to /Categories page with vue-router
+    router.push("/categories");
+  } catch (error) {
+    console.error("Error during login:", error);
+    alert("Login failed. Please try again.");
+  }
 };
 </script>
 
