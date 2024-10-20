@@ -1,206 +1,47 @@
-# Register Function
-
-The updated code with a dropdown list for selecting either "admin" or "customer":
-
-```html
-</div>
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="password"
-        >
-          Password
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="password"
-          type="password"
-          placeholder="Password"
-        />
-      </div>
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="role"
-        >
-          Role
-        </label>
-        <select
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="role"
-        >
-          <option value="admin">Admin</option>
-          <option value="customer">Customer</option>
-        </select>
-      </div>
-```
-
-Now install `axios` to make api request
-
-```bash
-npm install axios
-```
-
-Update the `Register.vue`
+# Modify the App Layout to Full Screen
 
 ```vue
-<!-- src/pages/Register.vue -->
-<script setup>
-import axios from "axios";
-import { ref } from "vue";
-
-const username = ref("");
-const password = ref("");
-const role = ref("admin"); // Default role is admin
-
-const register = async () => {
-  try {
-    const response = await axios.post("http://localhost:3000/auth/register", {
-      username: username.value,
-      password: password.value,
-      role: role.value,
-    });
-    console.log("Registration successful:", response.data);
-    alert("Registration successful!");
-  } catch (error) {
-    console.error("Error during registration:", error);
-  }
-};
-</script>
-
+<!-- src/layout/AppLayout.vue -->
 <template>
-  <div>
-    <h1 class="text-2xl font-bold mb-4">Register</h1>
-    <form>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-          Username
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          v-model="username"
-          id="email"
-          placeholder="Username"
-        />
+  <div class="min-h-screen flex flex-col bg-gray-100">
+    <Navbar />
+    <div class="flex-grow flex items-center justify-center">
+      <div class="w-full max-w-md">
+        <!-- Main Content -->
+        <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <router-view />
+        </div>
       </div>
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="password"
-        >
-          Password
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          v-model="password"
-          id="password"
-          type="password"
-          placeholder="Password"
-        />
-      </div>
-      <div class="mb-6">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="role">
-          Role
-        </label>
-        <select
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          v-model="role"
-          id="role"
-        >
-          <option value="admin">Admin</option>
-          <option value="customer">Customer</option>
-        </select>
-      </div>
-      <div class="flex items-center justify-between">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="button"
-          @click.prevent="register"
-        >
-          Register
-        </button>
-        <router-link
-          to="/login"
-          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-        >
-          Login
-        </router-link>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
+
+<script setup>
+import Navbar from "./Navbar.vue";
+</script>
 ```
 
-Update the `Login.vue`
+Add `Navbar` component
 
 ```vue
-<!-- src/pages/Login.vue -->
+<!-- src/components/Navbar.vue -->
+<template>
+  <nav class="bg-blue-500 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="text-white font-bold text-xl">MyApp</div>
+      <div>
+        <router-link to="/" class="text-white mr-4">Home</router-link>
+        <router-link to="/about" class="text-white">About</router-link>
+      </div>
+    </div>
+  </nav>
+</template>
 
 <script setup>
-import axios from "axios";
-import { ref } from "vue";
-
-const username = ref("");
-const password = ref("");
-
-const handleLogin = async () => {
-  const data = {
-    username: username.value,
-    password: password.value,
-  };
-
-  const res = await axios.post("http://localhost:3000/auth/login", data);
-  alert("Login successful!");
-  console.log("Login successful:", res.data);
-};
+// No additional setup required
 </script>
 
-<template>
-  <div>
-    <h1 class="text-2xl font-bold mb-4">Login</h1>
-    <form>
-      <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-          Username
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="username"
-          v-model="username"
-          placeholder="Username"
-        />
-      </div>
-      <div class="mb-6">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="password"
-        >
-          Password
-        </label>
-        <input
-          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="password"
-          v-model="password"
-          type="password"
-          placeholder="Password"
-        />
-      </div>
-      <div class="flex items-center justify-between">
-        <button
-          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="button"
-          @click.prevent="handleLogin"
-        >
-          Sign In
-        </button>
-        <router-link
-          to="/register"
-          class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-        >
-          Register
-        </router-link>
-      </div>
-    </form>
-  </div>
-</template>
+<style scoped>
+/* Add your styles here */
+</style>
 ```
