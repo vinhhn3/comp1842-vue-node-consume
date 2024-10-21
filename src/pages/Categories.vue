@@ -26,7 +26,7 @@ onMounted(async () => {
 });
 
 const createCategory = () => {
-  console.log("Create category");
+  router.push("/categories/create");
 };
 
 const editCategory = (id) => {
