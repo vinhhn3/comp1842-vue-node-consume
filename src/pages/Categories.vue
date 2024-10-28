@@ -33,12 +33,27 @@ const editCategory = (id) => {
   console.log("Edit category");
 };
 
-const deleteCategory = (id) => {
-  console.log("Delete category");
+const deleteCategory = async (id) => {
+  console.log("Delete category" + id);
+  try {
+    const res = await axios.delete(`http://localhost:3000/categories/${id}`, {
+      headers: {
+        "x-auth-token": `${localStorage.getItem("token")}`,
+      },
+    });
+
+    if (res.status === 204) {
+      alert("Category deleted successfully");
+      categories.value = categories.value.filter(
+        (category) => category._id !== id
+      );
+    }
+  } catch (error) {}
 };
 
 const viewDetails = (id) => {
   console.log("View details");
+  router.push(`/categories/${id}`);
 };
 </script>
 
