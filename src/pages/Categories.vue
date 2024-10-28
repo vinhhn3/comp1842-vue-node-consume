@@ -31,6 +31,11 @@ const createCategory = () => {
 
 const editCategory = (id) => {
   console.log("Edit category");
+  // STEP TODO:
+  // Create the CategoryEditPage.vue file in the pages folder
+  // Config the route in the router/index.js file
+  // Redirect to the edit category page
+  // Inside the edit category page, make the api request (PUT) to update the category
 };
 
 const deleteCategory = async (id) => {
