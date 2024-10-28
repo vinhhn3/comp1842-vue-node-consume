@@ -36,6 +36,7 @@ const editCategory = (id) => {
   // Config the route in the router/index.js file
   // Redirect to the edit category page
   // Inside the edit category page, make the api request (PUT) to update the category
+  router.push(`/categories/edit/${id}`);
 };
 
 const deleteCategory = async (id) => {
