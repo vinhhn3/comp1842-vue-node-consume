@@ -7,6 +7,7 @@ import CategoryDetailsPage from "../pages/CategoryDetailsPage.vue";
 import CategoryEditPage from "../pages/CategoryEditPage.vue";
 import CreateCategory from "../pages/CreateCategory.vue";
 import ProductCreatePage from "../pages/ProductCreatePage.vue";
+import Products from "../pages/Products.vue";
 
 const routes = [
   // Auth routes
@@ -18,6 +19,7 @@ const routes = [
   { path: "/categories/:id", component: CategoryDetailsPage },
   { path: "/categories/edit/:id", component: CategoryEditPage },
   // Products routes
+  { path: "/products", component: Products },
   { path: "/products/create", component: ProductCreatePage },
 
   { path: "/", redirect: "/login" },
